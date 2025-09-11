@@ -1,0 +1,63 @@
+{
+  // Files
+  "files.exclude": {
+    ".git": true,
+    ".DS_Store": true,
+    ".history": true
+  },
+
+  // Search
+  "search.exclude": {
+    ".next": true,
+    ".nx": true,
+    ".pnpm": true,
+    ".vscode": true,
+    "*.svg": true,
+    "*lock.*": true,
+    "build": true,
+    "dist": true
+  },
+  // Typescript
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  // Editor
+  "window.title": "${rootName}${separator}${activeEditorLong} ${dirty}",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    // Prettier plugin for organize imports
+    "source.organizeImports": "never",
+    "source.fixAll.eslint": "always",
+    "source.fixAll.stylelint": "always"
+  },
+  "editor.formatOnSave": true,
+  "editor.foldingImportsByDefault": false,
+  // Tailwind
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ],
+  "todo-tree.general.tags": ["TODO", "FIXME", "console.log"],
+  "todo-tree.highlights.customHighlight": {
+    "TODO": {
+      "icon": "note",
+      "type": "line",
+      "foreground": "#6EEB83",
+      "iconColour": "#6EEB83",
+      "gutterIcon": true
+    },
+    "FIXME": {
+      "icon": "bug",
+      "type": "line",
+      "foreground": "#FFB347",
+      "iconColour": "#FFB347",
+      "gutterIcon": true
+    },
+    "console.log": {
+      "icon": "pencil",
+      "type": "line",
+      "foreground": "#FFE761",
+      "iconColour": "#FFE761",
+      "gutterIcon": true
+    }
+  }
+}
