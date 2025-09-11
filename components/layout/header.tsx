@@ -1,3 +1,4 @@
+import { ModeToggle } from '@/components/layout/mode-toggle';
 import Link from 'next/link';
 
 export const Header = () => {
@@ -16,6 +17,7 @@ export const Header = () => {
         >
           Portfolio
         </Link>
+        <ModeToggle />
       </nav>
     </header>
   );
