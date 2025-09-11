@@ -5,7 +5,7 @@ const HomePage = () => {
         className="text-2xl font-bold"
         data-testid="home-heading"
       >
-        PortaFi
+        Sample portfolio
       </h1>
     </>
   );

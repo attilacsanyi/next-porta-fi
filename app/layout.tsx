@@ -1,3 +1,4 @@
+import { Header } from '@/app/components/header';
 import { ThemeProvider } from '@/app/providers/theme-provider';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
@@ -34,6 +35,7 @@ export default function RootLayout({
           disableTransitionOnChange
           enableSystem
         >
+          <Header />
           <main className="container mx-auto p-4">{children}</main>
         </ThemeProvider>
       </body>
