@@ -1,7 +1,9 @@
 import { Header } from '@/components/layout/header';
+import ContextProvider from '@/context'; // Import ContextProvider
 import { ThemeProvider } from '@/providers/theme-provider';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+import { headers } from 'next/headers'; // Import headers function
 import './globals.css';
 
 const geistSans = Geist({
@@ -19,25 +21,36 @@ export const metadata: Metadata = {
   description: 'PortaFi — a blockchain portfolio viewer.',
 };
 
-export default function RootLayout({
+// RootLayout must be an async function to use headers()
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Retrieve cookies from request headers on the server
+  const headersObj = await headers();
+  const cookies = headersObj.get('cookie');
+
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      suppressHydrationWarning
+    >
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          disableTransitionOnChange
-          enableSystem
-        >
-          <Header />
-          <main className="container mx-auto p-4">{children}</main>
-        </ThemeProvider>
+        <ContextProvider cookies={cookies}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            disableTransitionOnChange
+            enableSystem
+          >
+            <Header />
+            <main className="container mx-auto p-4">{children}</main>
+          </ThemeProvider>
+        </ContextProvider>
       </body>
     </html>
   );

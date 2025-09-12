@@ -17,6 +17,7 @@ export const Header = () => {
         >
           Portfolio
         </Link>
+        <appkit-button />
         <ModeToggle />
       </nav>
     </header>

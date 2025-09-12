@@ -120,3 +120,34 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Override Reown AppKit fonts to prevent CORS errors */
+@layer utilities {
+  /* Override AppKit font loading to use system fonts */
+  appkit-button,
+  appkit-button *,
+  w3m-modal,
+  w3m-modal *,
+  w3m-button,
+  w3m-button *,
+  [class*='w3m-'],
+  [class*='appkit-'] {
+    font-family:
+      var(--font-geist-sans),
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      'Helvetica Neue',
+      Arial,
+      sans-serif !important;
+  }
+
+  /* Prevent any @font-face declarations from AppKit */
+  @supports (font-display: swap) {
+    * {
+      font-display: swap;
+    }
+  }
+}
