@@ -1,11 +1,12 @@
 'use client';
 
 import { config, networks, projectId, wagmiAdapter } from '@/config';
+import { useIsMounted } from '@/hooks/use-is-mounted';
 import { mainnet } from '@reown/appkit/networks';
 import { createAppKit, type AppKit } from '@reown/appkit/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useTheme } from 'next-themes';
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { WagmiProvider, cookieToInitialState, type Config } from 'wagmi';
 
 const queryClient = new QueryClient();
@@ -24,12 +25,7 @@ let appKit: AppKit | null = null;
 
 const AppKitThemeSync = () => {
   const { theme, resolvedTheme } = useTheme();
-  const [isMounted, setIsMounted] = useState(false);
-
-  // Ensure component is mounted before doing any client-side operations
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const isMounted = useIsMounted();
 
   useEffect(() => {
     // Initialize AppKit only on client side to prevent hydration issues
