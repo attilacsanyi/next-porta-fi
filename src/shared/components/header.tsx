@@ -1,6 +1,6 @@
 'use client';
 
-import { ModeToggle } from '@/components/layout/mode-toggle';
+import { ModeToggle } from '@/shared/components';
 import Link from 'next/link';
 
 export const Header = () => {

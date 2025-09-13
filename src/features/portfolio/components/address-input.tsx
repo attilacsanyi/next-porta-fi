@@ -1,8 +1,7 @@
 'use client';
 
-import { ClientOnly } from '@/components/layout/client-only';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { ClientOnly } from '@/shared/components';
+import { Button, Input } from '@/shared/ui';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { isAddress } from 'viem';

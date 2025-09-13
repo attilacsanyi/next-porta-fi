@@ -1,7 +1,7 @@
 'use client';
 
-import { config, networks, projectId, wagmiAdapter } from '@/config';
-import { useIsMounted } from '@/hooks/use-is-mounted';
+import { config, networks, projectId, wagmiAdapter } from '@/core/config';
+import { useIsMounted } from '@/shared/hooks';
 import { mainnet } from '@reown/appkit/networks';
 import { createAppKit, type AppKit } from '@reown/appkit/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';

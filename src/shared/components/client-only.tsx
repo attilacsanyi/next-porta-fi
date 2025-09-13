@@ -1,6 +1,6 @@
 'use client';
 
-import { useIsMounted } from '@/hooks/use-is-mounted';
+import { useIsMounted } from '@/shared/hooks';
 import { ReactElement, ReactNode } from 'react';
 
 interface ClientOnlyProps<T extends ReactNode = ReactElement> {

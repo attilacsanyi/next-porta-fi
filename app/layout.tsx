@@ -1,9 +1,8 @@
-import { Header } from '@/components/layout/header';
-import ContextProvider from '@/context'; // Import ContextProvider
-import { ThemeProvider } from '@/providers/theme-provider';
+import { ThemeProvider, Web3Provider } from '@/core/providers';
+import { Header } from '@/shared/components';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-import { headers } from 'next/headers'; // Import headers function
+import { headers } from 'next/headers';
 import './globals.css';
 
 const geistSans = Geist({
@@ -40,7 +39,7 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
-        <ContextProvider cookies={cookies}>
+        <Web3Provider cookies={cookies}>
           <ThemeProvider
             attribute="class"
             defaultTheme="light"
@@ -50,7 +49,7 @@ export default async function RootLayout({
             <Header />
             <main className="container mx-auto p-4">{children}</main>
           </ThemeProvider>
-        </ContextProvider>
+        </Web3Provider>
       </body>
     </html>
   );

@@ -1,4 +1,4 @@
-import { AddressInput } from '@/components/portfolio/address-input';
+import { AddressInput } from '@/features/portfolio';
 
 const HomePage = () => {
   return (
