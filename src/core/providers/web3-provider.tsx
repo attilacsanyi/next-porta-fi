@@ -1,6 +1,6 @@
 'use client';
 
-import { config, networks, projectId, wagmiAdapter } from '@/core/config';
+import { config, env, networks, wagmiAdapter } from '@/core/config';
 import { useIsMounted } from '@/shared/hooks';
 import { mainnet } from '@reown/appkit/networks';
 import { createAppKit, type AppKit } from '@reown/appkit/react';
@@ -29,10 +29,10 @@ const AppKitThemeSync = () => {
 
   useEffect(() => {
     // Initialize AppKit only on client side to prevent hydration issues
-    if (!appKit && projectId && isMounted) {
+    if (!appKit && env.projectId && isMounted) {
       appKit = createAppKit({
         adapters: [wagmiAdapter],
-        projectId: projectId!,
+        projectId: env.projectId,
         networks,
         defaultNetwork: mainnet,
         metadata,

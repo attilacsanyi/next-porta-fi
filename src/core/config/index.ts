@@ -1,1 +1,2 @@
-export { config, networks, projectId, wagmiAdapter } from './wagmi';
+export { env } from './env';
+export { config, networks, wagmiAdapter } from './wagmi';
