@@ -47,3 +47,7 @@ ai
 .cursorrules
 .cursor
 
+# Claude
+.claude
+.mcp.json
+
