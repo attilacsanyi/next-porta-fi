@@ -20,12 +20,11 @@ export const metadata: Metadata = {
   description: 'PortaFi — a blockchain portfolio viewer.',
 };
 
-// RootLayout must be an async function to use headers()
-export default async function RootLayout({
+const RootLayout = async ({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>) => {
   // Retrieve cookies from request headers on the server
   const headersObj = await headers();
   const cookies = headersObj.get('cookie');
@@ -53,4 +52,6 @@ export default async function RootLayout({
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;
