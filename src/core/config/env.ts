@@ -19,4 +19,10 @@ export const env = {
   get alchemyApiKey() {
     return getEnvVar('ALCHEMY_API_KEY', process.env.ALCHEMY_API_KEY);
   },
+  get rpcUrl() {
+    return getEnvVar(
+      'NEXT_PUBLIC_MAINNET_RPC_URL',
+      process.env.NEXT_PUBLIC_MAINNET_RPC_URL
+    );
+  },
 } as const;
