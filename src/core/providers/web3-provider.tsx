@@ -81,13 +81,13 @@ const AppKitThemeSync = () => {
   return null;
 };
 
-export default function ContextProvider({
+const ContextProvider = ({
   children,
   cookies,
 }: {
   children: ReactNode;
   cookies: string | null; // Cookies from server for hydration
-}) {
+}) => {
   // Calculate initial state for Wagmi SSR hydration
   const initialState = cookieToInitialState(config as Config, cookies);
 
@@ -103,4 +103,6 @@ export default function ContextProvider({
       </QueryClientProvider>
     </WagmiProvider>
   );
-}
+};
+
+export default ContextProvider;
