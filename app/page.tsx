@@ -1,4 +1,6 @@
 import { AddressInput } from '@/features/portfolio';
+import { Button } from '@/shared/ui';
+import Link from 'next/link';
 
 const HomePage = () => {
   return (
@@ -16,6 +18,26 @@ const HomePage = () => {
 
       <div className="text-muted-foreground text-center text-sm">
         <p>Connect your wallet or manually enter any Ethereum address</p>
+      </div>
+
+      <div className="flex items-center space-x-4">
+        <div className="bg-muted h-px flex-1"></div>
+        <span className="text-muted-foreground text-xs">OR</span>
+        <div className="bg-muted h-px flex-1"></div>
+      </div>
+
+      <div className="text-center">
+        <Link href="/demo">
+          <Button
+            className="px-6"
+            variant="outline"
+          >
+            View Demo Portfolio
+          </Button>
+        </Link>
+        <p className="text-muted-foreground mt-2 text-xs">
+          Explore the interface with sample data
+        </p>
       </div>
     </div>
   );
