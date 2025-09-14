@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next Porta Fi
 
-## Getting Started
+[![Netlify Status](https://api.netlify.com/api/v1/badges/4fcd0131-334f-4bb7-8b32-3201ec71984a/deploy-status)](https://app.netlify.com/projects/next-porta-fi/deploys)
 
-First, run the development server:
+A modern portfolio finance application built with Next.js 15 and Ethereum integration. Visualize cryptocurrency portfolios with real-time pricing and blockchain verification.
+
+## Quick Start
+
+🚀 **Live Demo**: [https://next-porta-fi.netlify.app/](https://next-porta-fi.netlify.app/)
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# Install dependencies
+pnpm install
+
+# Start development server
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit `http://localhost:3000/portfolio/demo` to see a sample portfolio in demo mode.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Next.js 15** - App Router with async components
+- **React 19** - Latest React features
+- **TypeScript** - Full type safety
+- **Tailwind CSS** - Utility-first styling
+- **Wagmi** - Ethereum interactions
+- **Alchemy SDK** - Token data and metadata
+- **CoinGecko API** - Real-time pricing
 
-## Learn More
+## Features
 
-To learn more about Next.js, take a look at the following resources:
+- Portfolio overview with total value and token count
+- Individual token cards with metadata
+- Blockchain verification system
+- Responsive mobile design
+- Demo mode (no API setup required)
+- Dark/light theme support
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Development
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+pnpm dev      # Start development server
+pnpm build    # Build for production
+pnpm lint     # Run ESLint
+pnpm format   # Format code
+```
 
-## Deploy on Vercel
+## Real Data Setup (Optional)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Create `.env.local` with your API keys:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+ALCHEMY_API_KEY=your_alchemy_api_key
+NEXT_PUBLIC_PROJECT_ID=your_reown_project_id
+NEXT_PUBLIC_MAINNET_RPC_URL=your_rpc_url
+```
+
+## Deployment
+
+The application is deployed on [Netlify](https://next-porta-fi.netlify.app/) with automatic deployments from the main branch.
