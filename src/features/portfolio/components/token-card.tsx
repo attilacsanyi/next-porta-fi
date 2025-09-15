@@ -7,6 +7,7 @@
 
 import Image from 'next/image';
 import type { TokenBalance } from '../types';
+import { formatters } from '../utils';
 import { VerificationBadge } from './verification-badge';
 
 interface TokenCardProps {
@@ -18,31 +19,6 @@ export const TokenCard = ({
   token,
   showVerificationLoading = false,
 }: TokenCardProps) => {
-  const formatValue = (value: string) => {
-    const num = parseFloat(value);
-    if (num >= 1000000) {
-      return `$${(num / 1000000).toFixed(2)}M`;
-    }
-    if (num >= 1000) {
-      return `$${(num / 1000).toFixed(2)}K`;
-    }
-    return `$${num.toFixed(2)}`;
-  };
-
-  const formatBalance = (balance: string) => {
-    const num = parseFloat(balance);
-    if (num >= 1000000) {
-      return `${(num / 1000000).toFixed(2)}M`;
-    }
-    if (num >= 1000) {
-      return `${(num / 1000).toFixed(2)}K`;
-    }
-    if (num >= 1) {
-      return num.toFixed(4);
-    }
-    return num.toExponential(2);
-  };
-
   return (
     <div className="bg-card rounded-lg border p-4 transition-shadow hover:shadow-md sm:p-6">
       <div className="flex items-start justify-between">
@@ -101,7 +77,7 @@ export const TokenCard = ({
               Balance
             </div>
             <div className="mt-1 truncate font-mono text-sm sm:text-base">
-              {formatBalance(token.balance)} {token.symbol}
+              {parseFloat(token.balance).toFixed(4)} {token.symbol}
             </div>
           </div>
           <div>
@@ -109,7 +85,7 @@ export const TokenCard = ({
               Price
             </div>
             <div className="mt-1 font-mono text-sm sm:text-base">
-              ${token.priceUsd}
+              ${formatters.price(token.priceUsd)}
             </div>
           </div>
         </div>
@@ -118,7 +94,7 @@ export const TokenCard = ({
             Value
           </div>
           <div className="mt-1 text-lg font-semibold text-green-600 sm:text-xl">
-            {formatValue(token.valueUsd)}
+            ${formatters.value(token.valueUsd)}
           </div>
         </div>
       </div>

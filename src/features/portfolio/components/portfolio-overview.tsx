@@ -27,7 +27,7 @@ export const PortfolioOverview = ({ portfolio }: PortfolioOverviewProps) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {/* Total Value */}
         <div className="bg-muted/50 rounded-lg p-4 sm:col-span-2 lg:col-span-1">
           <div className="text-muted-foreground text-sm font-medium">
@@ -35,6 +35,19 @@ export const PortfolioOverview = ({ portfolio }: PortfolioOverviewProps) => {
           </div>
           <div className="mt-1 text-2xl font-bold text-green-600 sm:text-3xl">
             ${formatters.value(portfolio.totalValue)}
+          </div>
+        </div>
+
+        {/* ETH Balance */}
+        <div className="rounded-lg border border-blue-200/20 bg-gradient-to-br from-blue-500/10 to-purple-500/10 p-4 dark:border-blue-800/30">
+          <div className="text-muted-foreground text-sm font-medium">
+            ETH Balance
+          </div>
+          <div className="mt-1 text-2xl font-bold text-blue-600 sm:text-3xl dark:text-blue-400">
+            {parseFloat(portfolio.ethBalance.balance).toFixed(4)} ETH
+          </div>
+          <div className="text-muted-foreground mt-1 text-xs">
+            ${formatters.value(portfolio.ethBalance.valueUsd)}
           </div>
         </div>
 
