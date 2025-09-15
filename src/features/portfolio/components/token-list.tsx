@@ -19,8 +19,8 @@ export const TokenList = ({
 }: TokenListProps) => {
   if (isLoading) {
     return (
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {Array.from({ length: 6 }).map((_, i) => (
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {Array.from({ length: 8 }).map((_, i) => (
           <div
             key={i}
             className="from-muted/20 to-muted/10 h-80 animate-pulse rounded-xl bg-gradient-to-br shadow-sm"
@@ -45,7 +45,7 @@ export const TokenList = ({
   }
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {tokens.map(token => (
         <TokenCard
           key={token.contractAddress}

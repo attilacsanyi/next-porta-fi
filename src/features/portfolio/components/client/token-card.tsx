@@ -47,11 +47,11 @@ export const TokenCard = ({
 
             {/* Token Info with improved typography */}
             <div className="min-w-0 flex-1">
-              <div className="mb-1 flex items-center gap-2">
-                <h3 className="truncate text-base font-bold tracking-tight sm:text-lg">
+              <div className="mb-1">
+                <h3 className="line-clamp-2 text-base leading-tight font-bold tracking-tight sm:text-lg">
                   {token.name}
                 </h3>
-                <span className="text-muted-foreground flex-shrink-0 text-sm font-medium">
+                <span className="text-muted-foreground mt-1 text-sm font-medium">
                   {token.symbol}
                 </span>
               </div>
