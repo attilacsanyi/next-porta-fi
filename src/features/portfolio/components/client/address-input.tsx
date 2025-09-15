@@ -35,13 +35,8 @@ export const AddressInput = () => {
   return (
     <ClientOnly
       fallback={
-        <div className="w-full max-w-lg space-y-3">
-          <div className="flex items-center gap-3">
-            <div className="flex-1">
-              <div className="bg-muted h-12 w-full animate-pulse rounded-lg shadow-sm" />
-            </div>
-            <div className="bg-muted h-12 w-36 animate-pulse rounded-lg shadow-sm" />
-          </div>
+        <div className="w-full max-w-lg">
+          <div className="h-12 animate-pulse rounded-lg bg-gradient-to-r from-muted/20 to-muted/10 shadow-sm" />
         </div>
       }
     >

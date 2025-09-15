@@ -23,20 +23,8 @@ export const TokenList = ({
         {Array.from({ length: 6 }).map((_, i) => (
           <div
             key={i}
-            className="bg-card animate-pulse rounded-lg border p-4"
-          >
-            <div className="flex items-center gap-3">
-              <div className="bg-muted h-10 w-10 rounded-full" />
-              <div className="flex-1 space-y-2">
-                <div className="bg-muted h-4 w-24 rounded" />
-                <div className="bg-muted h-3 w-16 rounded" />
-              </div>
-            </div>
-            <div className="mt-4 space-y-2">
-              <div className="bg-muted h-3 w-20 rounded" />
-              <div className="bg-muted h-4 w-16 rounded" />
-            </div>
-          </div>
+            className="h-80 animate-pulse rounded-xl bg-gradient-to-br from-muted/20 to-muted/10 shadow-sm"
+          />
         ))}
       </div>
     );
