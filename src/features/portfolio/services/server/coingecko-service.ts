@@ -137,6 +137,31 @@ export class CoingeckoService {
   };
 
   /**
+   * Get ETH price
+   */
+  getEthPrice = async (): Promise<number> => {
+    const url = `${this.baseUrl}/simple/price?ids=ethereum&vs_currencies=usd`;
+
+    try {
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        this.logger.error(`ETH price API error: ${response.status}`);
+        return 0;
+      }
+
+      const data: { ethereum?: { usd?: number } } = await response.json();
+      const price = data.ethereum?.usd || 0;
+
+      this.logger.info(`ETH price fetched: $${price}`);
+      return price;
+    } catch (error) {
+      this.logger.error('Failed to fetch ETH price', { error });
+      return 0;
+    }
+  };
+
+  /**
    * Add delay between requests
    * TODO: Move to a utility function
    */
