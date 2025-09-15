@@ -5,22 +5,11 @@ import { Button, Input } from '@/shared/ui';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { isAddress } from 'viem';
-import { useAccount } from 'wagmi';
 
 export const AddressInput = () => {
   const [address, setAddress] = useState('');
   const [isValid, setIsValid] = useState(false);
-  const { address: connectedAddress, isConnected } = useAccount();
   const router = useRouter();
-
-  // Update address when wallet connects/disconnects
-  useEffect(() => {
-    if (isConnected && connectedAddress) {
-      setAddress(connectedAddress);
-    } else {
-      setAddress('');
-    }
-  }, [connectedAddress, isConnected]);
 
   // Validate address whenever it changes
   useEffect(() => {
