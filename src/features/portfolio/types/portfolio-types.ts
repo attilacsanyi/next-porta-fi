@@ -25,12 +25,28 @@ export interface TokenBalance {
 }
 
 /**
+ * Native ETH balance information
+ */
+export interface EthBalance {
+  /** ETH balance in ETH units (e.g., "1.2345") */
+  balance: string;
+  /** ETH balance in wei (raw) */
+  rawBalance: string;
+  /** USD price per ETH */
+  priceUsd: string;
+  /** Total USD value of ETH holdings */
+  valueUsd: string;
+}
+
+/**
  * Complete portfolio data
  */
 export interface Portfolio {
   /** Array of token balances */
   tokens: TokenBalance[];
-  /** Total portfolio value in USD */
+  /** Native ETH balance */
+  ethBalance: EthBalance;
+  /** Total portfolio value in USD including ETH */
   totalValue: string;
   /** Wallet address */
   address: string;
