@@ -7,7 +7,9 @@ import { useEffect, useState } from 'react';
 import { isAddress } from 'viem';
 
 export const AddressInput = () => {
-  const [address, setAddress] = useState('');
+  const [address, setAddress] = useState(
+    '0xd470055c6189b921c4d44b3d277ad868f79c0f75'
+  );
   const [isValid, setIsValid] = useState(false);
   const router = useRouter();
 
