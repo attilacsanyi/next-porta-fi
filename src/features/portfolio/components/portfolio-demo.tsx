@@ -9,15 +9,37 @@ import { PortfolioOverview, TokenList } from './index';
 // Sample portfolio data for demonstration
 const samplePortfolio: Portfolio = {
   address: '0xf1dB03EadA64A3505dFBAd6cA28Ae67ec975cfa3',
-  totalValue: '5423876.50',
+  totalValue: '5428414.52',
   lastUpdated: new Date(),
   ethBalance: {
-    balance: '0',
-    rawBalance: '0',
-    priceUsd: '0',
-    valueUsd: '0',
+    balance: '1.0000',
+    rawBalance: '1000000000000000000',
+    priceUsd: '4538.02',
+    valueUsd: '4538.02',
   },
   tokens: [
+    {
+      contractAddress: 'native',
+      name: 'Ethereum',
+      symbol: 'ETH',
+      logo: 'https://assets.coingecko.com/coins/images/279/small/ethereum.png?1747033579',
+      balance: '1.0000',
+      rawBalance: '1000000000000000000',
+      priceUsd: '4538.02',
+      valueUsd: '4538.02',
+      decimals: 18,
+      verification: {
+        symbol: 'ETH',
+        balance: '1.0000',
+        name: 'Ethereum',
+        verified: true,
+        symbolMatch: true,
+        balanceMatch: true,
+        alchemySymbol: 'ETH',
+        alchemyBalance: '1.0000',
+        alchemyName: 'Ethereum',
+      },
+    },
     {
       contractAddress: '0xdac17f958d2ee523a2206206994597c13d831ec7',
       name: 'Tether USDt',

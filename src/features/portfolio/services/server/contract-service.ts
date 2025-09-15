@@ -114,27 +114,45 @@ export class ContractService {
    * Returns verification status for UI display
    */
   verifyTokenData = async (
-    contractAddress: `0x${string}`,
+    contractAddress: `0x${string}` | 'native',
     userAddress: `0x${string}`,
     alchemyBalance: string,
     alchemySymbol: string,
     alchemyName: string
   ): Promise<TokenVerificationResult> => {
     try {
-      this.logger.info('Verifying token data', {
-        operation: 'verifyTokenData',
-        contractAddress,
-        userAddress,
-        alchemyBalance,
-        alchemySymbol,
-        alchemyName,
-      });
+      // this.logger.info('Verifying token data', {
+      //   operation: 'verifyTokenData',
+      //   contractAddress,
+      //   userAddress,
+      //   alchemyBalance,
+      //   alchemySymbol,
+      //   alchemyName,
+      // });
 
-      // Get direct contract data
+      // Handle native ETH verification
+      if (contractAddress === 'native') {
+        const onChainBalance = await this.getEthBalance(userAddress);
+        const alchemyBigInt = BigInt(alchemyBalance);
+
+        return {
+          symbol: 'ETH',
+          balance: onChainBalance.toString(),
+          name: 'Ethereum',
+          verified: alchemyBigInt === onChainBalance,
+          symbolMatch: alchemySymbol === 'ETH',
+          balanceMatch: alchemyBigInt === onChainBalance,
+          alchemySymbol,
+          alchemyBalance: alchemyBigInt.toString(),
+          alchemyName,
+        };
+      }
+
+      // Get direct contract data for ERC-20 tokens
       const [onChainSymbol, onChainBalance, onChainName] = await Promise.all([
-        this.getTokenSymbol(contractAddress),
-        this.getTokenBalance(contractAddress, userAddress),
-        this.getTokenName(contractAddress),
+        this.getTokenSymbol(contractAddress as `0x${string}`),
+        this.getTokenBalance(contractAddress as `0x${string}`, userAddress),
+        this.getTokenName(contractAddress as `0x${string}`),
       ]);
 
       // Convert Alchemy balance to BigInt for comparison

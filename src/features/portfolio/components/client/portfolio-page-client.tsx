@@ -17,6 +17,7 @@ export const PortfolioPageClient = ({ address }: PortfolioPageClientProps) => {
   const { portfolio, loading, error, retry } = usePortfolioData(address, {
     maxTokens: 10, // Limit for better performance
     includeZeroBalances: true,
+    includeEth: true,
   });
 
   if (loading) {

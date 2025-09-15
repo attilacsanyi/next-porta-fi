@@ -20,12 +20,15 @@ export class PortfolioClientService {
         address,
       });
 
-      const { maxTokens, includeZeroBalances } = options;
+      const { maxTokens, includeZeroBalances, includeEth } = options;
 
       const searchParams = new URLSearchParams({
         ...(maxTokens && { maxTokens: maxTokens.toString() }),
         ...(includeZeroBalances !== undefined && {
           includeZeroBalances: includeZeroBalances.toString(),
+        }),
+        ...(includeEth !== undefined && {
+          includeEth: includeEth.toString(),
         }),
       });
 

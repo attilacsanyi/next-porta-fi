@@ -1,6 +1,8 @@
 import { env } from '@/core/config';
 import {
   Alchemy,
+  BigNumber,
+  BlockTag,
   GetTokensForOwnerOptions,
   GetTokensForOwnerResponse,
   Network,
@@ -11,7 +13,7 @@ import { apiErrorHandler, createLogger } from '../../utils';
  * Raw token balance response from Alchemy API
  */
 interface AlchemyTokenBalance {
-  contractAddress: string;
+  contractAddress: string | 'native';
   tokenBalance: string;
   error?: string;
 }
@@ -25,6 +27,10 @@ interface TokenMetadata {
   decimals: number | null;
   logo: string | null;
 }
+
+export type AlchemyTokenBalanceWithMetadata = AlchemyTokenBalance & {
+  metadata: TokenMetadata;
+};
 
 /**
  * Alchemy Service
@@ -47,38 +53,93 @@ export class AlchemyService {
   }
 
   /**
-   * Get tokens with balances and metadata using official SDK
+   * Get tokens with balances and metadata using official Alchemy SDK
+   *
+   * @param address - The Ethereum address to fetch tokens for
+   * @param maxTokens - Maximum number of tokens to return (optional)
+   * @param includeEth - Whether to include native ETH balance in results (optional, defaults to false)
    */
   getTokensWithBalancesAndMetadata = async (
     address: string,
-    maxTokens?: number
-  ): Promise<Array<AlchemyTokenBalance & { metadata: TokenMetadata }>> => {
+    maxTokens?: number,
+    includeEth?: boolean
+  ): Promise<AlchemyTokenBalanceWithMetadata[]> => {
     const tokensResponse = await this.getTokensForOwner(address);
 
-    let validTokens = tokensResponse.tokens.map(token => ({
-      contractAddress: token.contractAddress,
-      tokenBalance: token.rawBalance || '0',
-      error: token.error || undefined,
-      metadata: {
-        name: token.name || 'Unknown Token',
-        symbol: token.symbol || 'UNKNOWN',
-        decimals: token.decimals || 18,
-        logo: token.logo || null,
-      },
-    }));
+    let tokens: AlchemyTokenBalanceWithMetadata[] = tokensResponse.tokens.map(
+      token => ({
+        contractAddress: token.contractAddress,
+        tokenBalance: token.rawBalance || '0',
+        error: token.error || undefined,
+        metadata: {
+          name: token.name || 'Unknown Token',
+          symbol: token.symbol || 'UNKNOWN',
+          decimals: token.decimals || 18,
+          logo: token.logo || null,
+        },
+      })
+    );
+
+    // Add native ETH if requested
+    if (includeEth) {
+      const ethBalance = await this.getBalance(address);
+      const nativeEthToken: AlchemyTokenBalanceWithMetadata = {
+        contractAddress: 'native',
+        tokenBalance: ethBalance.toString(),
+        error: undefined,
+        metadata: {
+          name: 'Ethereum',
+          symbol: 'ETH',
+          decimals: 18,
+          logo: 'https://assets.coingecko.com/coins/images/279/small/ethereum.png?1747033579',
+        },
+      };
+      tokens.push(nativeEthToken);
+    }
 
     // Apply max tokens limit
-    if (maxTokens && validTokens.length > maxTokens) {
-      validTokens = validTokens.slice(0, maxTokens);
+    if (maxTokens && tokens.length > maxTokens) {
+      tokens = tokens.slice(0, maxTokens);
     }
 
     this.logger.info('Tokens with metadata fetched successfully', {
       operation: 'getTokensWithBalancesAndMetadata',
       address,
-      tokenCount: validTokens.length,
+      tokenCount: tokens.length,
+      includeEth,
     });
 
-    return validTokens;
+    return tokens;
+  };
+
+  /**
+   * Get ETH balance for an address using official SDK
+   */
+  getBalance = async (
+    addressOrName: string | Promise<string>,
+    blockTag?: BlockTag | Promise<BlockTag>
+  ): Promise<BigNumber> => {
+    try {
+      const balance = await this.alchemy.core.getBalance(
+        addressOrName,
+        blockTag
+      );
+
+      this.logger.info('ETH balance fetched successfully', {
+        operation: 'getBalance',
+        address:
+          typeof addressOrName === 'string' ? addressOrName : 'Promise<string>',
+        blockTag: blockTag
+          ? typeof blockTag === 'string'
+            ? blockTag
+            : 'Promise<BlockTag>'
+          : 'latest',
+      });
+
+      return balance;
+    } catch (error) {
+      return apiErrorHandler(error, 'Failed to fetch ETH balance') as never;
+    }
   };
 
   /**

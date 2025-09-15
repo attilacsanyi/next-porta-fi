@@ -3,7 +3,11 @@ import {
   coinGeckoService,
   contractService,
 } from '@/features/portfolio/services/server';
-import type { Portfolio, TokenBalance } from '@/features/portfolio/types';
+import type {
+  EthBalance,
+  Portfolio,
+  TokenBalance,
+} from '@/features/portfolio/types';
 import { createLogger, formatters } from '@/features/portfolio/utils';
 import { NextRequest, NextResponse } from 'next/server';
 import { isAddress } from 'viem';
@@ -39,12 +43,18 @@ export const GET = async (
     const maxTokens = parseInt(searchParams.get('maxTokens') || '50');
     const includeZeroBalances =
       searchParams.get('includeZeroBalances') === 'false' ? false : true;
+    const includeEth =
+      searchParams.get('includeEth') === 'false' ? false : true;
 
     // logger.info(`Fetching portfolio for address: ${address}`);
 
     // 1. Get tokens with balances and metadata from Alchemy
     const tokensWithMetadata =
-      await alchemyService.getTokensWithBalancesAndMetadata(address, maxTokens);
+      await alchemyService.getTokensWithBalancesAndMetadata(
+        address,
+        maxTokens,
+        true
+      );
     // logger.info(`Found ${tokensWithMetadata.length} non-zero token balances with metadata`);
 
     if (tokensWithMetadata.length === 0) {
@@ -63,7 +73,7 @@ export const GET = async (
       return NextResponse.json(emptyPortfolio);
     }
 
-    // Filter balances based on includeZeroBalances parameter
+    // Filter tokens balances based on includeZeroBalances parameter
     const filteredTokens = includeZeroBalances
       ? tokensWithMetadata
       : tokensWithMetadata.filter(token => {
@@ -72,15 +82,16 @@ export const GET = async (
           return decimalBalance > BigInt(0);
         });
 
-    // 2. Get prices for the tokens
-    const contractAddresses = filteredTokens.map(
-      token => token.contractAddress
-    );
+    // 2. Get prices for the tokens including native ETH
     // logger.info(`Fetching prices for tokens`, {
     //   tokenCount: contractAddresses.length,
     // });
 
+    const contractAddresses = filteredTokens.map(
+      ({ contractAddress }) => contractAddress
+    );
     const priceData = await coinGeckoService.getTokenPrices(contractAddresses);
+    priceData['native'] = { usd: await coinGeckoService.getEthPrice() };
 
     // logger.info(`Received price data:`, {
     //   priceData: JSON.stringify(priceData, null, 2),
@@ -133,27 +144,55 @@ export const GET = async (
       })
     );
 
-    // Filter out null tokens and sort by value
-    const validTokens = tokens
-      .filter((token): token is TokenBalance => token !== null)
-      .sort((a, b) => parseFloat(b.valueUsd) - parseFloat(a.valueUsd));
+    // Filter out null tokens
+    const validTokens = tokens.filter(
+      (token): token is TokenBalance => token !== null
+    );
 
-    // 4. Calculate total portfolio value
-    const totalValue = validTokens.reduce(
+    // 4. Handle native ETH balance and pricing
+    let ethBalance: EthBalance = {
+      balance: '0',
+      rawBalance: '0',
+      priceUsd: '0',
+      valueUsd: '0',
+    };
+    const nativeEthToken = validTokens.find(
+      ({ contractAddress }) => contractAddress === 'native'
+    );
+
+    if (nativeEthToken) {
+      ethBalance = {
+        balance: nativeEthToken.balance,
+        rawBalance: nativeEthToken.rawBalance,
+        priceUsd: nativeEthToken.priceUsd,
+        valueUsd: nativeEthToken.valueUsd,
+      };
+    }
+
+    // 5. Calculate total portfolio value including ETH
+    const tokensValue = validTokens.reduce(
       (total, token) => total + parseFloat(token.valueUsd),
       0
+    );
+    const totalValue = tokensValue + parseFloat(ethBalance.valueUsd);
+
+    // Filter out native ETH token respect to includeEth parameter
+    const filteredValidTokens = includeEth
+      ? validTokens
+      : validTokens.filter(
+          ({ contractAddress }) => contractAddress !== 'native'
+        );
+
+    // Sort tokens by value
+    const sortedTokens = filteredValidTokens.sort(
+      (a, b) => parseFloat(b.valueUsd) - parseFloat(a.valueUsd)
     );
 
     const portfolio: Portfolio = {
       address,
       totalValue: totalValue.toFixed(2),
-      tokens: validTokens,
-      ethBalance: {
-        balance: '0',
-        rawBalance: '0',
-        priceUsd: '0',
-        valueUsd: '0',
-      },
+      tokens: sortedTokens,
+      ethBalance,
       lastUpdated: new Date(),
     };
 

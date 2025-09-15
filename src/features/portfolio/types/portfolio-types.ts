@@ -73,6 +73,8 @@ export interface PortfolioServiceOptions {
   includeZeroBalances?: boolean;
   /** Maximum number of tokens to process */
   maxTokens?: number;
+  /** Include native ETH */
+  includeEth?: boolean;
 }
 
 /**
