@@ -172,6 +172,7 @@ export const GET = async (
  * @param balances - Array of token balances with contract addresses
  * @returns Promise resolving to array of tokens with their metadata
  */
+// TODO: move this to alchemy service
 const getTokensWithMetadata = async (
   balances: Array<{ contractAddress: string; tokenBalance: string }>
 ) => {

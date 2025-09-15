@@ -163,8 +163,8 @@ export class CoingeckoService {
 
   /**
    * Add delay between requests
-   * TODO: Move to a utility function
    */
+  // TODO: Move to a utility function
   private delay = async (ms: number): Promise<void> =>
     new Promise(resolve => setTimeout(resolve, ms));
 }
