@@ -41,7 +41,10 @@ const formatPrice = (price: number | string): string => {
 /**
  * Format USD value with commas and proper decimals
  */
-const formatValue = (value: number | string): string => {
+const formatValue = (
+  value: number | string,
+  notation: 'standard' | 'compact' = 'standard'
+): string => {
   const numValue = typeof value === 'string' ? parseFloat(value) : value;
 
   if (numValue === 0) return '0.00';
@@ -49,6 +52,7 @@ const formatValue = (value: number | string): string => {
   return new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
+    notation,
   }).format(numValue);
 };
 
