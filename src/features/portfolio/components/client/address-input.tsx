@@ -46,22 +46,24 @@ export const AddressInput = () => {
   return (
     <ClientOnly
       fallback={
-        <div className="w-full max-w-lg space-y-2">
-          <div className="flex items-center space-x-2">
+        <div className="w-full max-w-lg space-y-3">
+          <div className="flex items-center gap-3">
             <div className="flex-1">
-              <div className="bg-muted h-10 w-full animate-pulse rounded-md border" />
+              <div className="h-12 w-full animate-pulse rounded-lg bg-muted shadow-sm" />
             </div>
-            <div className="bg-muted h-10 w-32 animate-pulse rounded-md" />
+            <div className="h-12 w-36 animate-pulse rounded-lg bg-muted shadow-sm" />
           </div>
         </div>
       }
     >
-      <div className="w-full max-w-lg space-y-2">
-        <div className="flex items-center space-x-2">
+      <div className="w-full max-w-lg space-y-3">
+        <div className="flex items-center gap-3">
           <div className="flex-1">
             <Input
-              className={`font-mono text-sm ${
-                address && !isValid ? 'border-red-500 focus:border-red-500' : ''
+              className={`h-12 font-mono text-sm shadow-sm transition-all duration-200 focus:shadow-md ${
+                address && !isValid
+                  ? 'border-red-500 bg-red-50 focus:border-red-500 focus:ring-red-500/20 dark:bg-red-950/20'
+                  : 'focus:ring-primary/20'
               }`}
               placeholder="Enter Ethereum address (0x...)"
               type="text"
@@ -72,7 +74,7 @@ export const AddressInput = () => {
             />
           </div>
           <Button
-            className="whitespace-nowrap"
+            className="h-12 px-6 font-semibold shadow-sm transition-all duration-200 hover:shadow-md"
             disabled={!isValid}
             suppressHydrationWarning
             onClick={handleShowPortfolio}
@@ -81,9 +83,14 @@ export const AddressInput = () => {
           </Button>
         </div>
         {address && !isValid && (
-          <p className="px-1 text-sm text-red-500">
-            Please enter a valid Ethereum address
-          </p>
+          <div className="flex items-center gap-2 rounded-lg bg-red-50 px-3 py-2 dark:bg-red-950/20">
+            <svg className="h-4 w-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} />
+            </svg>
+            <p className="text-sm font-medium text-red-700 dark:text-red-400">
+              Please enter a valid Ethereum address
+            </p>
+          </div>
         )}
       </div>
     </ClientOnly>
