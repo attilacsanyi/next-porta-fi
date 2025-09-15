@@ -1,5 +1,10 @@
 import { env } from '@/core/config';
-import { Alchemy, Network } from 'alchemy-sdk';
+import {
+  Alchemy,
+  GetTokensForOwnerOptions,
+  GetTokensForOwnerResponse,
+  Network,
+} from 'alchemy-sdk';
 import { apiErrorHandler, createLogger } from '../../utils';
 
 /**
@@ -42,72 +47,65 @@ export class AlchemyService {
   }
 
   /**
-   * Get token balances using official SDK
+   * Get tokens with balances and metadata using official SDK
    */
-  getTokenBalances = async (
+  getTokensWithBalancesAndMetadata = async (
     address: string,
     maxTokens?: number
-  ): Promise<AlchemyTokenBalance[]> => {
-    try {
-      const balances = await this.alchemy.core.getTokenBalances(address);
+  ): Promise<Array<AlchemyTokenBalance & { metadata: TokenMetadata }>> => {
+    const tokensResponse = await this.getTokensForOwner(address);
 
-      // Filter non-zero balances and convert to our interface
-      let validBalances = balances.tokenBalances
-        .filter(
-          token => token.tokenBalance !== '0x0' && token.tokenBalance !== '0'
-        )
-        .map(token => ({
-          contractAddress: token.contractAddress,
-          tokenBalance: token.tokenBalance || '0',
-          error: token.error || undefined,
-        }));
+    let validTokens = tokensResponse.tokens.map(token => ({
+      contractAddress: token.contractAddress,
+      tokenBalance: token.rawBalance || '0',
+      error: token.error || undefined,
+      metadata: {
+        name: token.name || 'Unknown Token',
+        symbol: token.symbol || 'UNKNOWN',
+        decimals: token.decimals || 18,
+        logo: token.logo || null,
+      },
+    }));
 
-      // Apply max tokens limit
-      if (maxTokens && validBalances.length > maxTokens) {
-        validBalances = validBalances.slice(0, maxTokens);
-      }
-
-      this.logger.info('Token balances fetched successfully', {
-        operation: 'getTokenBalances',
-        address,
-        tokenCount: validBalances.length,
-      });
-
-      return validBalances;
-    } catch (error) {
-      return apiErrorHandler(error, 'Failed to fetch token balances') as never;
+    // Apply max tokens limit
+    if (maxTokens && validTokens.length > maxTokens) {
+      validTokens = validTokens.slice(0, maxTokens);
     }
+
+    this.logger.info('Tokens with metadata fetched successfully', {
+      operation: 'getTokensWithBalancesAndMetadata',
+      address,
+      tokenCount: validTokens.length,
+    });
+
+    return validTokens;
   };
 
   /**
-   * Get token metadata using SDK
+   * Get tokens for owner using official SDK
    */
-  getTokenMetadata = async (
-    contractAddress: string
-  ): Promise<TokenMetadata> => {
-    const fallbackMetadata = {
-      name: 'Unknown Token',
-      symbol: 'UNKNOWN',
-      decimals: 18,
-      logo: null,
-    };
-
+  getTokensForOwner = async (
+    addressOrName: string,
+    options?: GetTokensForOwnerOptions
+  ): Promise<GetTokensForOwnerResponse> => {
     try {
-      const {
-        name = fallbackMetadata.name,
-        symbol = fallbackMetadata.symbol,
-        decimals = fallbackMetadata.decimals,
-        logo = fallbackMetadata.logo,
-      } = await this.alchemy.core.getTokenMetadata(contractAddress);
+      const tokensResponse = await this.alchemy.core.getTokensForOwner(
+        addressOrName,
+        options
+      );
 
-      return { name, symbol, decimals, logo };
-    } catch (error) {
-      this.logger.warn('Failed to fetch token metadata', {
-        operation: 'getTokenMetadata',
-        contractAddress,
-        error: error instanceof Error ? error.message : 'Unknown error',
+      this.logger.info('Tokens for owner fetched successfully', {
+        operation: 'getTokensForOwner',
+        address: addressOrName,
+        tokenCount: tokensResponse.tokens.length,
       });
-      return fallbackMetadata;
+
+      return tokensResponse;
+    } catch (error) {
+      return apiErrorHandler(
+        error,
+        'Failed to fetch tokens for owner'
+      ) as never;
     }
   };
 }

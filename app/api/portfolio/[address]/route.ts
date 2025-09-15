@@ -42,41 +42,45 @@ export const GET = async (
 
     // logger.info(`Fetching portfolio for address: ${address}`);
 
-    // 1. Get token balances from Alchemy
-    const balances = await alchemyService.getTokenBalances(address, maxTokens);
-    // logger.info(`Found ${balances.length} non-zero token balances`);
+    // 1. Get tokens with balances and metadata from Alchemy
+    const tokensWithMetadata =
+      await alchemyService.getTokensWithBalancesAndMetadata(address, maxTokens);
+    // logger.info(`Found ${tokensWithMetadata.length} non-zero token balances with metadata`);
 
-    if (balances.length === 0) {
+    if (tokensWithMetadata.length === 0) {
       const emptyPortfolio: Portfolio = {
         address,
         totalValue: '0',
         tokens: [],
+        ethBalance: {
+          balance: '0',
+          rawBalance: '0',
+          priceUsd: '0',
+          valueUsd: '0',
+        },
         lastUpdated: new Date(),
       };
       return NextResponse.json(emptyPortfolio);
     }
 
-    // Filter  balances
-    const filteredBalances = includeZeroBalances
-      ? balances
-      : balances.filter(token => {
+    // Filter balances based on includeZeroBalances parameter
+    const filteredTokens = includeZeroBalances
+      ? tokensWithMetadata
+      : tokensWithMetadata.filter(token => {
           // tokenBalance stored as hex in Alchemy SDK
           const decimalBalance = BigInt(token.tokenBalance);
           return decimalBalance > BigInt(0);
         });
 
-    // 2. Get metadata and prices in parallel
-    const contractAddresses = filteredBalances.map(
+    // 2. Get prices for the tokens
+    const contractAddresses = filteredTokens.map(
       token => token.contractAddress
     );
     // logger.info(`Fetching prices for tokens`, {
     //   tokenCount: contractAddresses.length,
     // });
 
-    const [tokensWithMetadata, priceData] = await Promise.all([
-      getTokensWithMetadata(filteredBalances),
-      coinGeckoService.getTokenPrices(contractAddresses),
-    ]);
+    const priceData = await coinGeckoService.getTokenPrices(contractAddresses);
 
     // logger.info(`Received price data:`, {
     //   priceData: JSON.stringify(priceData, null, 2),
@@ -84,7 +88,7 @@ export const GET = async (
 
     // 3. Create token balance objects with verification
     const tokens: (TokenBalance | null)[] = await Promise.all(
-      tokensWithMetadata.map(async token => {
+      filteredTokens.map(async token => {
         const { metadata } = token;
 
         // Skip tokens with invalid metadata
@@ -144,6 +148,12 @@ export const GET = async (
       address,
       totalValue: totalValue.toFixed(2),
       tokens: validTokens,
+      ethBalance: {
+        balance: '0',
+        rawBalance: '0',
+        priceUsd: '0',
+        valueUsd: '0',
+      },
       lastUpdated: new Date(),
     };
 
@@ -163,25 +173,4 @@ export const GET = async (
       { status: 500 }
     );
   }
-};
-
-/**
- * Helper function to get tokens with metadata
- * Fetches token metadata for each balance and combines them
- *
- * @param balances - Array of token balances with contract addresses
- * @returns Promise resolving to array of tokens with their metadata
- */
-// TODO: move this to alchemy service
-const getTokensWithMetadata = async (
-  balances: Array<{ contractAddress: string; tokenBalance: string }>
-) => {
-  return Promise.all(
-    balances.map(async token => {
-      const metadata = await alchemyService.getTokenMetadata(
-        token.contractAddress
-      );
-      return { ...token, metadata };
-    })
-  );
 };
