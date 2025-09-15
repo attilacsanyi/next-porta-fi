@@ -114,11 +114,64 @@ const samplePortfolio: Portfolio = {
 };
 
 export const PortfolioDemo = () => {
+  // Check if we have tokens with value > 0 for the pie chart
+  const hasTokensForChart = samplePortfolio.tokens.some(
+    token => parseFloat(token.valueUsd) > 0
+  );
+
   return (
     <div className="space-y-8">
       <PortfolioOverview portfolio={samplePortfolio} />
-      <TokenHoldingsPieChart portfolio={samplePortfolio} />
-      <TokenList tokens={samplePortfolio.tokens} />
+
+      {/* Token Holdings Section - Only show if we have tokens with value */}
+      {hasTokensForChart && (
+        <div className="space-y-6">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
+                Token Holdings
+              </h2>
+              <p className="text-muted-foreground">
+                Portfolio distribution by value
+              </p>
+            </div>
+          </div>
+          <TokenHoldingsPieChart portfolio={samplePortfolio} />
+        </div>
+      )}
+
+      {/* Token List Section */}
+      <div className="space-y-6">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
+              Tokens ({samplePortfolio.tokens.length})
+            </h2>
+            <p className="text-muted-foreground">
+              Detailed breakdown of all token holdings
+            </p>
+          </div>
+          {samplePortfolio.tokens.length > 0 && (
+            <div className="text-muted-foreground flex items-center gap-2 text-sm">
+              <svg
+                className="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                />
+              </svg>
+              Sorted by value
+            </div>
+          )}
+        </div>
+        <TokenList tokens={samplePortfolio.tokens} />
+      </div>
     </div>
   );
 };

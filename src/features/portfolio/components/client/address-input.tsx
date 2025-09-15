@@ -49,9 +49,9 @@ export const AddressInput = () => {
         <div className="w-full max-w-lg space-y-3">
           <div className="flex items-center gap-3">
             <div className="flex-1">
-              <div className="h-12 w-full animate-pulse rounded-lg bg-muted shadow-sm" />
+              <div className="bg-muted h-12 w-full animate-pulse rounded-lg shadow-sm" />
             </div>
-            <div className="h-12 w-36 animate-pulse rounded-lg bg-muted shadow-sm" />
+            <div className="bg-muted h-12 w-36 animate-pulse rounded-lg shadow-sm" />
           </div>
         </div>
       }
@@ -84,8 +84,18 @@ export const AddressInput = () => {
         </div>
         {address && !isValid && (
           <div className="flex items-center gap-2 rounded-lg bg-red-50 px-3 py-2 dark:bg-red-950/20">
-            <svg className="h-4 w-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} />
+            <svg
+              className="h-4 w-4 text-red-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+              />
             </svg>
             <p className="text-sm font-medium text-red-700 dark:text-red-400">
               Please enter a valid Ethereum address

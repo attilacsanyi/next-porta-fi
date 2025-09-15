@@ -3,9 +3,6 @@
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
   ChartConfig,
   ChartContainer,
   ChartTooltip,
@@ -81,18 +78,9 @@ export const TokenHoldingsPieChart = ({
   // Calculate total value for center display
   const formattedTotalValue = `$${formatters.value(parseFloat(portfolio.totalValue), 'compact')}`;
 
-  // Don't render if no data
-  if (chartData.length === 0) {
-    return null;
-  }
-
   return (
-    <Card className="flex flex-col">
-      <CardHeader className="items-center pb-0">
-        <CardTitle>Token Holdings</CardTitle>
-        <CardDescription>Portfolio distribution by value</CardDescription>
-      </CardHeader>
-      <CardContent className="flex-1 pb-0">
+    <Card className="from-card to-card/50 overflow-hidden border-0 bg-gradient-to-br shadow-sm">
+      <CardContent className="p-6">
         <ChartContainer
           className="mx-auto aspect-square max-h-[300px]"
           config={chartConfig}

@@ -20,7 +20,7 @@ export const TokenCard = ({
   showVerificationLoading = false,
 }: TokenCardProps) => {
   return (
-    <Card className="group overflow-hidden border-0 bg-gradient-to-br from-card to-card/50 shadow-sm transition-all duration-200 hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20">
+    <Card className="group from-card to-card/50 overflow-hidden border-0 bg-gradient-to-br shadow-sm transition-all duration-200 hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20">
       <CardHeader className="space-y-0 pb-4">
         <div className="flex items-start justify-between">
           <div className="flex min-w-0 flex-1 items-center gap-4">
@@ -29,7 +29,7 @@ export const TokenCard = ({
               {token.logo ? (
                 <Image
                   alt={`${token.name} logo`}
-                  className="h-12 w-12 rounded-full object-cover ring-2 ring-border/50 transition-transform group-hover:scale-105 sm:h-14 sm:w-14"
+                  className="ring-border/50 h-12 w-12 rounded-full object-cover ring-2 transition-transform group-hover:scale-105 sm:h-14 sm:w-14"
                   height={56}
                   src={token.logo}
                   width={56}
@@ -39,7 +39,7 @@ export const TokenCard = ({
                   }}
                 />
               ) : (
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-muted to-muted/70 text-sm font-bold ring-2 ring-border/50 transition-transform group-hover:scale-105 sm:h-14 sm:w-14 sm:text-base">
+                <div className="from-muted to-muted/70 ring-border/50 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br text-sm font-bold ring-2 transition-transform group-hover:scale-105 sm:h-14 sm:w-14 sm:text-base">
                   {token.symbol.charAt(0)}
                 </div>
               )}
@@ -51,11 +51,11 @@ export const TokenCard = ({
                 <h3 className="truncate text-base font-bold tracking-tight sm:text-lg">
                   {token.name}
                 </h3>
-                <span className="flex-shrink-0 text-sm font-medium text-muted-foreground">
+                <span className="text-muted-foreground flex-shrink-0 text-sm font-medium">
                   {token.symbol}
                 </span>
               </div>
-              <div className="flex items-center gap-1 text-xs text-muted-foreground sm:text-sm">
+              <div className="text-muted-foreground flex items-center gap-1 text-xs sm:text-sm">
                 <span className="font-mono">
                   {token.contractAddress.slice(0, 6)}...
                   {token.contractAddress.slice(-4)}
@@ -79,21 +79,19 @@ export const TokenCard = ({
         {/* Primary metrics in grid */}
         <div className="grid grid-cols-2 gap-6">
           <div className="space-y-2">
-            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            <p className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
               Balance
             </p>
             <div className="space-y-1">
               <p className="truncate font-mono text-sm font-medium sm:text-base">
                 {parseFloat(token.balance).toFixed(4)}
               </p>
-              <p className="text-xs text-muted-foreground">
-                {token.symbol}
-              </p>
+              <p className="text-muted-foreground text-xs">{token.symbol}</p>
             </div>
           </div>
 
           <div className="space-y-2">
-            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            <p className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
               Price
             </p>
             <p className="font-mono text-sm font-medium sm:text-base">
@@ -104,10 +102,10 @@ export const TokenCard = ({
 
         {/* Total Value - prominently displayed */}
         <div className="rounded-lg bg-gradient-to-r from-green-50 to-emerald-50 p-4 dark:from-green-950/20 dark:to-emerald-950/20">
-          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          <p className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
             Total Value
           </p>
-          <p className="mt-1 text-xl font-bold text-green-700 dark:text-green-400 sm:text-2xl">
+          <p className="mt-1 text-xl font-bold text-green-700 sm:text-2xl dark:text-green-400">
             ${formatters.value(token.valueUsd)}
           </p>
         </div>
