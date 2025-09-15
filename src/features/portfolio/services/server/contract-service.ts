@@ -1,7 +1,3 @@
-/**
- * Contract Service
- */
-
 import { env } from '@/core/config';
 import { createLogger } from '@/features/portfolio/utils';
 import { createPublicClient, erc20Abi, http } from 'viem';
@@ -91,6 +87,25 @@ export class ContractService {
         error,
       });
       return 'Unknown Token';
+    }
+  };
+
+  /**
+   * Get native ETH balance for an address
+   */
+  getEthBalance = async (userAddress: `0x${string}`): Promise<bigint> => {
+    try {
+      const balance = await this.publicClient.getBalance({
+        address: userAddress,
+      });
+      return balance;
+    } catch (error) {
+      this.logger.error('Failed to get ETH balance', {
+        operation: 'getBalance',
+        address: userAddress,
+        error,
+      });
+      return BigInt(0);
     }
   };
 
