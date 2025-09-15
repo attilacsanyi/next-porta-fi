@@ -11,6 +11,12 @@ const samplePortfolio: Portfolio = {
   address: '0xf1dB03EadA64A3505dFBAd6cA28Ae67ec975cfa3',
   totalValue: '5423876.50',
   lastUpdated: new Date(),
+  ethBalance: {
+    balance: '0',
+    rawBalance: '0',
+    priceUsd: '0',
+    valueUsd: '0',
+  },
   tokens: [
     {
       contractAddress: '0xdac17f958d2ee523a2206206994597c13d831ec7',
