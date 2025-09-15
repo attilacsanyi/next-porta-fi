@@ -1,7 +1,19 @@
+export interface Balance {
+  /** Formatted token balance (e.g., "1.2345") */
+  balance: string;
+  /** Raw balance in wei/smallest unit */
+  rawBalance: string;
+  /** USD price per token (e.g., "2500.00") */
+  priceUsd: string;
+  /** Total USD value of holdings (e.g., "3087.50") */
+  valueUsd: string;
+}
+
 /**
  * Processed token data for display
  */
-export interface TokenBalance {
+// TODO: Rename to Token
+export interface TokenBalance extends Balance {
   /** Token contract address */
   contractAddress: string;
   /** Token name (e.g., "Wrapped Ether") */
@@ -10,32 +22,10 @@ export interface TokenBalance {
   symbol: string;
   /** Token logo URL */
   logo: string | null;
-  /** Formatted token balance (e.g., "1.2345") */
-  balance: string;
-  /** USD price per token (e.g., "2500.00") */
-  priceUsd: string;
-  /** Total USD value of holdings (e.g., "3087.50") */
-  valueUsd: string;
-  /** Raw balance in wei/smallest unit */
-  rawBalance: string;
   /** Token decimals */
   decimals: number;
   /** Verification result for Trust but Verify badge system */
   verification?: TokenVerificationResult;
-}
-
-/**
- * Native ETH balance information
- */
-export interface EthBalance {
-  /** ETH balance in ETH units (e.g., "1.2345") */
-  balance: string;
-  /** ETH balance in wei (raw) */
-  rawBalance: string;
-  /** USD price per ETH */
-  priceUsd: string;
-  /** Total USD value of ETH holdings */
-  valueUsd: string;
 }
 
 /**
@@ -45,7 +35,7 @@ export interface Portfolio {
   /** Array of token balances */
   tokens: TokenBalance[];
   /** Native ETH balance */
-  ethBalance: EthBalance;
+  ethBalance: Balance;
   /** Total portfolio value in USD including ETH */
   totalValue: string;
   /** Wallet address */

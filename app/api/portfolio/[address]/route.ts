@@ -4,7 +4,7 @@ import {
   contractService,
 } from '@/features/portfolio/services/server';
 import type {
-  EthBalance,
+  Balance,
   Portfolio,
   TokenBalance,
 } from '@/features/portfolio/types';
@@ -150,7 +150,7 @@ export const GET = async (
     );
 
     // 4. Handle native ETH balance and pricing
-    let ethBalance: EthBalance = {
+    let ethBalance: Balance = {
       balance: '0',
       rawBalance: '0',
       priceUsd: '0',

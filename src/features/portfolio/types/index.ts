@@ -1,5 +1,5 @@
 export type {
-  EthBalance,
+  Balance,
   Portfolio,
   PortfolioLoadingState,
   PortfolioServiceOptions,
