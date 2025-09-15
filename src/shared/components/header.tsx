@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAccount } from 'wagmi';
 import { ModeToggle } from './mode-toggle';
+import { PortaFiLogo } from './portafi-logo';
 
 export const Header = () => {
   const { address, isConnected } = useAccount();
@@ -22,9 +23,13 @@ export const Header = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <Link
-            className="hover:text-primary text-xl font-bold transition-colors sm:text-2xl"
+            className="hover:text-primary flex items-center gap-2 text-xl font-bold transition-colors sm:text-2xl"
             href="/"
           >
+            <PortaFiLogo
+              className="shrink-0"
+              size="lg"
+            />
             PortaFi
           </Link>
 
