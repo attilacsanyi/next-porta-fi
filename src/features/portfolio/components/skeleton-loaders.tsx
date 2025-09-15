@@ -1,8 +1,3 @@
-/**
- * Simplified Skeleton Loading Components
- * High-level bouncing effects for clean loading states
- */
-
 // Reusable skeleton card component
 const SkeletonCard = ({
   className = '',
@@ -71,58 +66,5 @@ export const VerificationBadgeSkeleton = ({
     <div
       className={`bg-muted animate-pulse rounded-full ${sizeClasses[size]}`}
     />
-  );
-};
-
-interface LoadingProgressProps {
-  steps: Array<{
-    label: string;
-    status: 'pending' | 'loading' | 'completed' | 'error';
-    icon?: string;
-  }>;
-}
-
-export const LoadingProgress = ({ steps }: LoadingProgressProps) => {
-  return (
-    <div className="bg-card rounded-lg border p-6">
-      <h3 className="mb-4 text-lg font-semibold">Loading Progress</h3>
-      <div className="space-y-3">
-        {steps.map((step, index) => (
-          <div
-            key={index}
-            className="flex items-center gap-3"
-          >
-            <div
-              className={`flex-shrink-0 ${
-                step.status === 'loading' ? 'animate-spin' : ''
-              }`}
-            >
-              {step.status === 'completed'
-                ? '✅'
-                : step.status === 'error'
-                  ? '❌'
-                  : step.status === 'loading'
-                    ? '⏳'
-                    : '⚪'}
-            </div>
-            <div className="flex-1">
-              <div
-                className={`text-sm ${
-                  step.status === 'completed'
-                    ? 'text-green-600'
-                    : step.status === 'error'
-                      ? 'text-red-600'
-                      : step.status === 'loading'
-                        ? 'text-blue-600'
-                        : 'text-muted-foreground'
-                }`}
-              >
-                {step.label}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
   );
 };

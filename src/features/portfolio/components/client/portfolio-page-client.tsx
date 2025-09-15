@@ -3,7 +3,6 @@
 import { usePortfolioData } from '../../hooks';
 import { PortfolioOverview } from '../portfolio-overview';
 import {
-  LoadingProgress,
   PortfolioOverviewSkeleton,
   TokenListSkeleton,
 } from '../skeleton-loaders';
@@ -22,36 +21,10 @@ export const PortfolioPageClient = ({ address }: PortfolioPageClientProps) => {
   });
 
   if (loading) {
-    const loadingSteps = [
-      {
-        label: 'Discovering tokens...',
-        status: 'loading' as const,
-        icon: '🔍',
-      },
-      { label: 'Fetching metadata...', status: 'pending' as const, icon: '📊' },
-      { label: 'Getting prices...', status: 'pending' as const, icon: '💰' },
-      {
-        label: 'Verifying on-chain...',
-        status: 'pending' as const,
-        icon: '🔗',
-      },
-    ];
-
     return (
-      <div className="space-y-6">
+      <div className="space-y-8">
         <PortfolioOverviewSkeleton />
-
-        <div className="grid gap-6 lg:grid-cols-3">
-          <div className="lg:col-span-2">
-            <TokenListSkeleton
-              count={4}
-              showVerificationBadges={false}
-            />
-          </div>
-          <div className="lg:col-span-1">
-            <LoadingProgress steps={loadingSteps} />
-          </div>
-        </div>
+        <TokenListSkeleton count={6} />
       </div>
     );
   }
