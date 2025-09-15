@@ -16,7 +16,7 @@ pnpm install
 pnpm dev
 ```
 
-Visit `http://localhost:3000/portfolio/demo` to see a sample portfolio in demo mode.
+Visit `http://localhost:3000` to see the interactive portfolio demo and start exploring!
 
 ## Tech Stack
 

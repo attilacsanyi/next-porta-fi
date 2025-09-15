@@ -115,16 +115,10 @@ const samplePortfolio: Portfolio = {
 
 export const PortfolioDemo = () => {
   return (
-    <div className="container mx-auto p-8">
-      <div className="mb-8">
-        <h1 className="mb-2 text-3xl font-bold">Portfolio Demo</h1>
-      </div>
-
-      <div className="space-y-6">
-        <PortfolioOverview portfolio={samplePortfolio} />
-        <TokenHoldingsPieChart portfolio={samplePortfolio} />
-        <TokenList tokens={samplePortfolio.tokens} />
-      </div>
+    <div className="space-y-8">
+      <PortfolioOverview portfolio={samplePortfolio} />
+      <TokenHoldingsPieChart portfolio={samplePortfolio} />
+      <TokenList tokens={samplePortfolio.tokens} />
     </div>
   );
 };
