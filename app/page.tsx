@@ -17,17 +17,8 @@ const HomePage = () => {
 
             {/* Address Input */}
             <div className="mx-auto mb-6 max-w-lg">
-              <div className="mb-3">
-                <h2 className="text-muted-foreground text-sm font-medium">
-                  Explore any Ethereum address
-                </h2>
-              </div>
               <AddressInput />
             </div>
-
-            <p className="text-muted-foreground text-sm">
-              Connect your wallet or enter any address to get started
-            </p>
           </div>
         </div>
       </section>
