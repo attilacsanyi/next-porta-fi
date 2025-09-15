@@ -8,6 +8,7 @@ import {
   PortfolioOverviewSkeleton,
   TokenListSkeleton,
 } from './skeleton-loaders';
+import { TokenHoldingsPieChart } from './token-holdings-pie-chart';
 
 interface PortfolioPageClientProps {
   address: string;
@@ -105,7 +106,10 @@ export const PortfolioPageClient = ({ address }: PortfolioPageClientProps) => {
     <div className="space-y-6">
       <PortfolioOverview portfolio={portfolio} />
 
-      {/* Mobile-optimized token list with better spacing */}
+      {/* Token Holdings Pie Chart */}
+      <TokenHoldingsPieChart portfolio={portfolio} />
+
+      {/* Token List */}
       <div className="space-y-4">
         <TokenList tokens={portfolio.tokens} />
       </div>

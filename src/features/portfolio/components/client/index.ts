@@ -9,3 +9,4 @@ export {
   TokenListSkeleton,
   VerificationBadgeSkeleton,
 } from './skeleton-loaders';
+export { TokenHoldingsPieChart } from './token-holdings-pie-chart';

@@ -4,12 +4,13 @@
  */
 
 import type { Portfolio } from '../types';
+import { TokenHoldingsPieChart } from './client';
 import { PortfolioOverview, TokenList } from './index';
 
 // Sample portfolio data for demonstration
 const samplePortfolio: Portfolio = {
   address: '0xf1dB03EadA64A3505dFBAd6cA28Ae67ec975cfa3',
-  totalValue: '5428414.52',
+  totalValue: '16505.13634',
   lastUpdated: new Date(),
   ethBalance: {
     balance: '1.0000',
@@ -94,8 +95,8 @@ const samplePortfolio: Portfolio = {
       balance: '3.1234',
       rawBalance:
         '0x00000000000000000000000000000000000000000000000000005af3107a4000',
-      priceUsd: '16.01',
-      valueUsd: '50,005634',
+      priceUsd: '160.01',
+      valueUsd: '500.05634',
       decimals: 18,
       verification: {
         symbol: 'YFIVE',
@@ -121,6 +122,7 @@ export const PortfolioDemo = () => {
 
       <div className="space-y-6">
         <PortfolioOverview portfolio={samplePortfolio} />
+        <TokenHoldingsPieChart portfolio={samplePortfolio} />
         <TokenList tokens={samplePortfolio.tokens} />
       </div>
     </div>
