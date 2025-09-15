@@ -36,7 +36,7 @@ export const AddressInput = () => {
     <ClientOnly
       fallback={
         <div className="w-full max-w-lg">
-          <div className="h-12 animate-pulse rounded-lg bg-gradient-to-r from-muted/20 to-muted/10 shadow-sm" />
+          <div className="from-muted/20 to-muted/10 h-12 animate-pulse rounded-lg bg-gradient-to-r shadow-sm" />
         </div>
       }
     >

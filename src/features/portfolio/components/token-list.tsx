@@ -23,7 +23,7 @@ export const TokenList = ({
         {Array.from({ length: 6 }).map((_, i) => (
           <div
             key={i}
-            className="h-80 animate-pulse rounded-xl bg-gradient-to-br from-muted/20 to-muted/10 shadow-sm"
+            className="from-muted/20 to-muted/10 h-80 animate-pulse rounded-xl bg-gradient-to-br shadow-sm"
           />
         ))}
       </div>
