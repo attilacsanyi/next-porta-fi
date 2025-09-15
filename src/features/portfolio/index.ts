@@ -6,11 +6,9 @@ export * from './services/server';
 
 // Server components (can be used in both server and client)
 export {
-  AddressInput,
   PortfolioDemo,
   PortfolioLoading,
   PortfolioOverview,
-  TokenCard,
   TokenList,
   VerificationBadge,
 } from './components';

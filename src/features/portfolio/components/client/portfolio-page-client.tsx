@@ -2,12 +2,12 @@
 
 import { usePortfolioData } from '../../hooks';
 import { PortfolioOverview } from '../portfolio-overview';
-import { TokenList } from '../token-list';
 import {
   LoadingProgress,
   PortfolioOverviewSkeleton,
   TokenListSkeleton,
-} from './skeleton-loaders';
+} from '../skeleton-loaders';
+import { TokenList } from '../token-list';
 import { TokenHoldingsPieChart } from './token-holdings-pie-chart';
 
 interface PortfolioPageClientProps {

@@ -1,4 +1,4 @@
-import { AddressInput } from '@/features/portfolio';
+import { AddressInput } from '@/features/portfolio/client';
 import { Button } from '@/shared/ui';
 import Link from 'next/link';
 

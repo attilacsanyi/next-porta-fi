@@ -4,7 +4,7 @@
  */
 
 import type { TokenBalance } from '../types';
-import { TokenCard } from './token-card';
+import { TokenCard } from './client/token-card';
 
 interface TokenListProps {
   tokens: TokenBalance[];

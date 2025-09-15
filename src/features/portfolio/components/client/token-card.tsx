@@ -1,20 +1,19 @@
-/**
- * Token Card Component
- * Displays individual token information with verification badge
- */
-
 'use client';
 
 import Image from 'next/image';
-import type { TokenBalance } from '../types';
-import { formatters } from '../utils';
-import { VerificationBadge } from './verification-badge';
+import type { TokenBalance } from '../../types';
+import { formatters } from '../../utils';
+import { VerificationBadge } from '../verification-badge';
 
 interface TokenCardProps {
   token: TokenBalance;
   showVerificationLoading?: boolean;
 }
 
+/**
+ * Token Card Component
+ * Displays individual token information with verification badge
+ */
 export const TokenCard = ({
   token,
   showVerificationLoading = false,
