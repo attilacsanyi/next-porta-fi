@@ -49,11 +49,9 @@ const AppKitThemeSync = () => {
         },
         // Start with light theme to prevent hydration mismatch
         themeMode: 'light',
-        // Theme variables override
         themeVariables: {
           // Font family
-          '--w3m-font-family':
-            'var(--font-geist-sans), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+          '--w3m-font-family': 'var(--font-geist-sans)',
           // Size and spacing
           '--w3m-font-size-master': '10px',
           '--w3m-border-radius-master': '8px',
