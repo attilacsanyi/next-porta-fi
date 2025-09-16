@@ -2,7 +2,7 @@
 
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/ui';
 import { useState } from 'react';
-import type { TokenVerificationResult, VerificationStatus } from '../types';
+import type { TokenVerificationResult, VerificationStatus } from '../../types';
 
 interface VerificationBadgeProps {
   verification?: TokenVerificationResult;

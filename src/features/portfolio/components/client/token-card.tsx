@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader } from '@/shared/ui';
 import Image from 'next/image';
 import type { TokenBalance } from '../../types';
 import { formatters } from '../../utils';
-import { VerificationBadge } from '../verification-badge';
+import { VerificationBadge } from './verification-badge';
 
 interface TokenCardProps {
   token: TokenBalance;

@@ -9,4 +9,3 @@ export {
   VerificationBadgeSkeleton,
 } from './skeleton-loaders';
 export { TokenList } from './token-list';
-export { VerificationBadge } from './verification-badge';

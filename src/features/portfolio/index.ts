@@ -10,7 +10,6 @@ export {
   PortfolioLoading,
   PortfolioOverview,
   TokenList,
-  VerificationBadge,
 } from './components';
 
 // Universal utilities and types
