@@ -1,4 +1,7 @@
+'use client';
+
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/ui';
+import { useState } from 'react';
 import type { TokenVerificationResult, VerificationStatus } from '../types';
 
 interface VerificationBadgeProps {
@@ -15,6 +18,18 @@ export const VerificationBadge = ({
   size = 'md',
   isLoading = false,
 }: VerificationBadgeProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleClick = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      setIsOpen(!isOpen);
+    }
+  };
   const getStatusInfo = (status: VerificationStatus) => {
     switch (status) {
       case 'verified':
@@ -70,10 +85,18 @@ export const VerificationBadge = ({
   // Show loading state if no verification data or explicitly loading
   if (isLoading || !verification) {
     return (
-      <Tooltip>
+      <Tooltip
+        open={isOpen}
+        onOpenChange={setIsOpen}
+      >
         <TooltipTrigger asChild>
           <div
-            className={`inline-flex items-center gap-2 rounded-full border border-gray-200 bg-gray-100 text-gray-600 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-400 ${sizeClasses[size]}`}
+            aria-label="Loading verification status"
+            className={`inline-flex cursor-pointer items-center gap-2 rounded-full border border-gray-200 bg-gray-100 text-gray-600 transition-all duration-200 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-gray-400 ${sizeClasses[size]}`}
+            role="button"
+            tabIndex={0}
+            onClick={handleClick}
+            onKeyDown={handleKeyDown}
           >
             <span className={`animate-spin ${iconSizes[size]}`}>⏳</span>
             <span className="font-medium">LOAD</span>
@@ -102,10 +125,18 @@ export const VerificationBadge = ({
     : `${verification.name}: Symbol: ${verification.symbolMatch ? '✅' : '❌'} | Balance: ${verification.balanceMatch ? '✅' : '❌'}`;
 
   return (
-    <Tooltip>
+    <Tooltip
+      open={isOpen}
+      onOpenChange={setIsOpen}
+    >
       <TooltipTrigger asChild>
         <div
-          className={`inline-flex cursor-pointer items-center gap-2 rounded-full border font-medium transition-all duration-200 hover:scale-105 ${statusInfo.className} ${sizeClasses[size]}`}
+          aria-label={`Verification status: ${statusInfo.label}`}
+          className={`inline-flex cursor-pointer items-center gap-2 rounded-full border font-medium transition-all duration-200 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none ${statusInfo.className} ${sizeClasses[size]}`}
+          role="button"
+          tabIndex={0}
+          onClick={handleClick}
+          onKeyDown={handleKeyDown}
         >
           <span className={iconSizes[size]}>{statusInfo.icon}</span>
           <span className="font-bold">{statusInfo.label}</span>
