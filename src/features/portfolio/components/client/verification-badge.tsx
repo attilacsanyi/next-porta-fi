@@ -1,5 +1,6 @@
 'use client';
 
+import shineStyles from '@/shared/styles/shine.module.css';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/ui';
 import { useState } from 'react';
 import type { TokenVerificationResult, VerificationStatus } from '../../types';
@@ -35,15 +36,14 @@ export const VerificationBadge = ({
       case 'verified':
         return {
           label: 'OK',
-          className:
-            'bg-green-100 text-green-800 border-green-200 dark:bg-green-950 dark:text-green-400 dark:border-green-800',
+          className: `bg-green-100 text-green-800 border-green-200 dark:bg-green-950 dark:text-green-400 dark:border-green-800 ${shineStyles.shineSlow}`,
           icon: '✅',
         };
       case 'mismatch':
         return {
           label: 'WARN',
           className:
-            'bg-red-100 text-red-800 border-red-200 dark:bg-red-950 dark:text-red-400 dark:border-red-800',
+            'animate-pulse bg-red-100 text-red-800 border-red-200 dark:bg-red-950 dark:text-red-400 dark:border-red-800',
           icon: '⚠️',
         };
       case 'unverified':
