@@ -5,12 +5,7 @@
 export * from './services/server';
 
 // Server components (can be used in both server and client)
-export {
-  PortfolioDemo,
-  PortfolioLoading,
-  PortfolioOverview,
-  TokenList,
-} from './components';
+export { PortfolioDemo, PortfolioOverview, TokenList } from './components';
 
 // Universal utilities and types
 export {
@@ -24,7 +19,6 @@ export {
 // Types (server-safe)
 export type {
   Portfolio,
-  PortfolioLoadingState,
   PortfolioServiceOptions,
   TokenBalance,
   TokenVerificationResult,

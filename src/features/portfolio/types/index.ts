@@ -1,7 +1,6 @@
 export type {
   Balance,
   Portfolio,
-  PortfolioLoadingState,
   PortfolioServiceOptions,
   TokenBalance,
   TokenVerificationResult,

@@ -6,9 +6,8 @@ import { useState } from 'react';
 import type { TokenVerificationResult, VerificationStatus } from '../../types';
 
 interface VerificationBadgeProps {
-  verification?: TokenVerificationResult;
+  verification: TokenVerificationResult;
   size?: 'sm' | 'md' | 'lg';
-  isLoading?: boolean;
 }
 
 /**
@@ -16,13 +15,14 @@ interface VerificationBadgeProps {
  */
 export const VerificationBadge = ({
   verification,
-  size = 'md',
-  isLoading = false,
+  size = 'sm',
 }: VerificationBadgeProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleClick = () => {
-    setIsOpen(!isOpen);
+  const handleClick = (event: React.MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setIsOpen(prev => !prev);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
@@ -81,33 +81,6 @@ export const VerificationBadge = ({
     md: 'text-base',
     lg: 'text-lg',
   };
-
-  // Show loading state if no verification data or explicitly loading
-  if (isLoading || !verification) {
-    return (
-      <Tooltip
-        open={isOpen}
-        onOpenChange={setIsOpen}
-      >
-        <TooltipTrigger asChild>
-          <div
-            aria-label="Loading verification status"
-            className={`inline-flex cursor-pointer items-center gap-2 rounded-full border border-gray-200 bg-gray-100 text-gray-600 transition-all duration-200 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-gray-400 ${sizeClasses[size]}`}
-            role="button"
-            tabIndex={0}
-            onClick={handleClick}
-            onKeyDown={handleKeyDown}
-          >
-            <span className={`animate-spin ${iconSizes[size]}`}>⏳</span>
-            <span className="font-medium">LOAD</span>
-          </div>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>Verifying token data...</p>
-        </TooltipContent>
-      </Tooltip>
-    );
-  }
 
   const getStatus = (): VerificationStatus => {
     if (verification.verified) return 'verified';

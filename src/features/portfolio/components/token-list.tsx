@@ -9,14 +9,9 @@ import { TokenCard } from './client/token-card';
 interface TokenListProps {
   tokens: TokenBalance[];
   isLoading?: boolean;
-  isVerifying?: boolean;
 }
 
-export const TokenList = ({
-  tokens,
-  isLoading = false,
-  isVerifying = false,
-}: TokenListProps) => {
+export const TokenList = ({ tokens, isLoading = false }: TokenListProps) => {
   if (isLoading) {
     return (
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -49,7 +44,6 @@ export const TokenList = ({
       {tokens.map(token => (
         <TokenCard
           key={token.contractAddress}
-          showVerificationLoading={isVerifying}
           token={token}
         />
       ))}

@@ -25,7 +25,7 @@ export interface TokenBalance extends Balance {
   /** Token decimals */
   decimals: number;
   /** Verification result for Trust but Verify badge system */
-  verification?: TokenVerificationResult;
+  verification: TokenVerificationResult;
 }
 
 /**
@@ -44,16 +44,7 @@ export interface Portfolio {
   lastUpdated: Date | string;
 }
 
-/**
- * Portfolio loading states
- */
-export type PortfolioLoadingState =
-  | 'idle'
-  | 'loading-balances'
-  | 'loading-metadata'
-  | 'loading-prices'
-  | 'success'
-  | 'error';
+// Note: PortfolioLoadingState removed - using simple boolean loading state instead
 
 /**
  * Service options for portfolio fetching
