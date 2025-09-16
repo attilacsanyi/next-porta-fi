@@ -3,9 +3,11 @@ import {
   Alchemy,
   BigNumber,
   BlockTag,
+  GetTokenPriceByAddressResponse,
   GetTokensForOwnerOptions,
   GetTokensForOwnerResponse,
   Network,
+  TokenAddressRequest,
 } from 'alchemy-sdk';
 import { apiErrorHandler, createLogger } from '../../utils';
 
@@ -31,6 +33,15 @@ interface TokenMetadata {
 export type AlchemyTokenBalanceWithMetadata = AlchemyTokenBalance & {
   metadata: TokenMetadata;
 };
+
+/**
+ * Price response from Alchemy API
+ */
+interface AlchemyPriceResponse {
+  [contractAddress: string]: {
+    usd?: number;
+  };
+}
 
 /**
  * Alchemy Service
@@ -167,6 +178,105 @@ export class AlchemyService {
         error,
         'Failed to fetch tokens for owner'
       ) as never;
+    }
+  };
+
+  /**
+   * Get token prices using Alchemy Prices API
+   */
+  getTokenPrices = async (
+    contractAddresses: string[]
+  ): Promise<AlchemyPriceResponse> => {
+    try {
+      // this.logger.info('Fetching token prices via Alchemy', {
+      //   operation: 'getTokenPrices',
+      //   tokenCount: contractAddresses.length,
+      // });
+
+      // Filter out 'native' representing ETH
+      const validAddresses = contractAddresses.filter(
+        addr => addr !== 'native'
+      );
+
+      if (validAddresses.length === 0) {
+        this.logger.warn('No valid contract addresses for price fetching');
+        return {};
+      }
+
+      const tokenRequests: TokenAddressRequest[] = validAddresses.map(
+        address => ({
+          network: Network.ETH_MAINNET,
+          address: address.toLowerCase(),
+        })
+      );
+
+      // Get prices from Alchemy
+      const priceResponse: GetTokenPriceByAddressResponse =
+        await this.alchemy.prices.getTokenPriceByAddress(tokenRequests);
+
+      const priceData: AlchemyPriceResponse = {};
+
+      priceResponse.data.forEach(result => {
+        const normalizedAddress = result.address.toLowerCase();
+
+        if (result.error) {
+          this.logger.warn(`Price error for ${result.address}`, {
+            error: result.error.message,
+          });
+        } else if (result.prices.length > 0) {
+          const usdPrice = result.prices.find(
+            ({ currency }) => currency === 'usd'
+          );
+          if (usdPrice) {
+            priceData[normalizedAddress] = {
+              usd: parseFloat(usdPrice.value),
+            };
+          }
+        }
+      });
+
+      // this.logger.info(
+      //   `Fetched prices for ${Object.keys(priceData).length}/${validAddresses.length} tokens`
+      // );
+
+      return priceData;
+    } catch (error) {
+      this.logger.error('Error fetching token prices from Alchemy', {
+        error,
+      });
+      return apiErrorHandler(error, 'Failed to fetch token prices') as never;
+    }
+  };
+
+  /**
+   * Get ETH price using Alchemy (by symbol)
+   */
+  getEthPrice = async (): Promise<number> => {
+    try {
+      // this.logger.info('Fetching ETH price via Alchemy');
+
+      const priceResponse = await this.alchemy.prices.getTokenPriceBySymbol([
+        'ETH',
+      ]);
+
+      if (priceResponse.data.length > 0 && !priceResponse.data[0].error) {
+        const ethResult = priceResponse.data[0];
+        const usdPrice = ethResult.prices.find(
+          ({ currency }) => currency === 'usd'
+        );
+
+        if (usdPrice) {
+          const price = parseFloat(usdPrice.value);
+          this.logger.info(`ETH price fetched: $${price}`);
+          return price;
+        }
+      }
+
+      this.logger.warn('No ETH price found in Alchemy response');
+      return 0;
+    } catch (error) {
+      this.logger.error('Error fetching ETH price from Alchemy', { error });
+      return 0;
     }
   };
 }

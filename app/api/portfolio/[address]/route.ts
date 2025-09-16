@@ -1,6 +1,5 @@
 import {
   alchemyService,
-  coinGeckoService,
   contractService,
 } from '@/features/portfolio/services/server';
 import type {
@@ -90,8 +89,16 @@ export const GET = async (
     const contractAddresses = filteredTokens.map(
       ({ contractAddress }) => contractAddress
     );
-    const priceData = await coinGeckoService.getTokenPrices(contractAddresses);
-    priceData['native'] = { usd: await coinGeckoService.getEthPrice() };
+
+    // Get token prices and ETH price in parallel from Alchemy
+    const [tokenPrices, ethPrice] = await Promise.all([
+      alchemyService.getTokenPrices(contractAddresses),
+      alchemyService.getEthPrice(),
+    ]);
+
+    // Combine token prices with ETH price
+    const priceData = { ...tokenPrices };
+    priceData['native'] = { usd: ethPrice };
 
     // logger.info(`Received price data:`, {
     //   priceData: JSON.stringify(priceData, null, 2),
