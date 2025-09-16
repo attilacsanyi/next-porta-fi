@@ -55,12 +55,14 @@ export const TokenCard = ({
                   {token.symbol}
                 </span>
               </div>
-              <div className="text-muted-foreground flex items-center gap-1 text-xs sm:text-sm">
-                <span className="font-mono">
-                  {token.contractAddress.slice(0, 6)}...
-                  {token.contractAddress.slice(-4)}
-                </span>
-              </div>
+              {token.contractAddress !== 'native' && (
+                <div className="text-muted-foreground flex items-center gap-1 text-xs sm:text-sm">
+                  <span className="font-mono">
+                    {token.contractAddress.slice(0, 6)}...
+                    {token.contractAddress.slice(-4)}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
 
