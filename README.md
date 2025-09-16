@@ -52,3 +52,7 @@ NEXT_PUBLIC_MAINNET_RPC_URL=your_rpc_url
 
 The app handles some interesting challenges around serverless timeouts and Next.js 15 boundaries.
 See [TECHNICAL_CHALLENGES.md](./TECHNICAL_CHALLENGES.md) for details and solutions.
+
+## Development & Improvements
+
+For code cleanup tasks, future enhancements, and technical debt tracking, see [IMPROVEMENTS.md](./IMPROVEMENTS.md).
