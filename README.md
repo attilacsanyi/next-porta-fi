@@ -1,52 +1,44 @@
-# Next Porta Fi
+# Porta Fi
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/4fcd0131-334f-4bb7-8b32-3201ec71984a/deploy-status)](https://app.netlify.com/projects/next-porta-fi/deploys)
 
-A modern portfolio finance application built with Next.js 15 and Ethereum integration. Visualize cryptocurrency portfolios with real-time pricing and blockchain verification.
+A portfolio tracker for Ethereum addresses. Enter any wallet address to see their token holdings with real-time prices. You can also connect your wallet and see your portfolio.
+
+🚀 **Try it live**: [next-porta-fi.netlify.app](https://next-porta-fi.netlify.app/)
 
 ## Quick Start
 
-🚀 **Live Demo**: [https://next-porta-fi.netlify.app/](https://next-porta-fi.netlify.app/)
-
 ```bash
-# Install dependencies
 pnpm install
-
-# Start development server
 pnpm dev
 ```
 
-Visit `http://localhost:3000` to see the interactive portfolio demo and start exploring!
+Open `http://localhost:3000` and try the demo address or enter your own wallet address.
+
+## What it does
+
+- Shows all tokens in a wallet with current prices
+- Displays portfolio value and token count
+- Works with any Ethereum address
+- No wallet connection needed (just paste an address)
 
 ## Tech Stack
 
-- **Next.js 15** - App Router with async components
-- **React 19** - Latest React features
-- **TypeScript** - Full type safety
-- **Tailwind CSS** - Utility-first styling
-- **Wagmi** - Ethereum interactions
-- **Alchemy SDK** - Token data and metadata
-- **CoinGecko API** - Real-time pricing
-
-## Features
-
-- Portfolio overview with total value and token count
-- Individual token cards with metadata
-- Blockchain verification system
-- Responsive mobile design
-- Demo mode (no API setup required)
-- Dark/light theme support
+- Next.js 15 + React 19
+- TypeScript + Tailwind CSS (dark/light theme)
+- Alchemy for blockchain data and pricing
+- Wagmi for Ethereum interactions (symbol + balance verification)
 
 ## Development
 
 ```bash
-pnpm dev      # Start development server
+pnpm dev      # Start dev server
 pnpm build    # Build for production
-pnpm lint     # Run ESLint
-pnpm format   # Format code
+pnpm lint     # Run linter
+pnpm format   # Run formatter
 ```
 
-## Real Data Setup (Optional)
+## Using Real Data
 
 Create `.env.local` with your API keys:
 
@@ -56,6 +48,7 @@ NEXT_PUBLIC_PROJECT_ID=your_reown_project_id
 NEXT_PUBLIC_MAINNET_RPC_URL=your_rpc_url
 ```
 
-## Deployment
+## Technical Notes
 
-The application is deployed on [Netlify](https://next-porta-fi.netlify.app/) with automatic deployments from the main branch.
+The app handles some interesting challenges around serverless timeouts and Next.js 15 boundaries.
+See [TECHNICAL_CHALLENGES.md](./TECHNICAL_CHALLENGES.md) for details and solutions.
