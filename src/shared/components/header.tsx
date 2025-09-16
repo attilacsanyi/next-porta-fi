@@ -30,7 +30,7 @@ export const Header = () => {
               className="shrink-0"
               size="lg"
             />
-            PortaFi
+            <span className="hidden sm:inline">PortaFi</span>
           </Link>
 
           <nav className="flex items-center space-x-2 sm:space-x-3 md:space-x-4">
@@ -62,7 +62,7 @@ export const Header = () => {
                   variant="outline"
                   onClick={handleShowMyPortfolio}
                 >
-                  My Portfolio
+                  Portfolio
                 </Button>
               )}
             </ClientOnly>

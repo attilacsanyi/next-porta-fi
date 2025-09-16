@@ -43,7 +43,7 @@ export const AddressInput = () => {
       }
     >
       <div className="w-full max-w-lg space-y-3">
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <div className="flex-1">
             <Input
               className={`h-12 font-mono text-sm shadow-sm transition-all duration-200 focus:shadow-md ${
@@ -60,7 +60,7 @@ export const AddressInput = () => {
             />
           </div>
           <Button
-            className="h-12 px-6 font-semibold shadow-sm transition-all duration-200 hover:shadow-md"
+            className="h-12 px-6 font-semibold shadow-sm transition-all duration-200 hover:shadow-md sm:whitespace-nowrap"
             disabled={!isValid}
             suppressHydrationWarning
             onClick={handleShowPortfolio}
